@@ -1,0 +1,9 @@
+Class Pen is for task 1
+
+Class Person realizes methods for task 2 and task 4
+
+Class StandatdStationarySet is for task 3
+HIERARHY (task 3)
+Stationery is base class, it has two children:
+  WritingStationary (it has two children: Pen, Pensil)
+  ReadingStatianary (it has two children: Book, Notepad)
