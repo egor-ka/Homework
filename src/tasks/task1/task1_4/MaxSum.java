@@ -7,17 +7,12 @@ public class MaxSum {
 
     public static int getLeftMaxSumIndex(double[] array){
         int indexMax = 0;
-        int arraySize;
-        double maxSum;
-        int pairCount;
-
-        arraySize = array.length;
-        pairCount = arraySize / 2;
-        maxSum = array[0] + array[arraySize - 1];
+        int arraySize = array.length;;
+        int pairCount = arraySize / 2;;
+        double maxSum = array[0] + array[arraySize - 1];;
 
         for(int i = 1; i < pairCount; i++){
-            double currentSum;
-            currentSum = array[i] + array[arraySize - i];
+            double currentSum = array[i] + array[arraySize - i];;
 
             if (currentSum > maxSum){
                 maxSum = currentSum;

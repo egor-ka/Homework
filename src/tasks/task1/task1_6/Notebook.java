@@ -5,6 +5,8 @@ package tasks.task1.task1_6;
  */
 public class Notebook {
 
+    static final int DEFAULT_CAPACITY = 50;
+
     private int capacity;
     private int size;
     public Note[] notes;
@@ -16,7 +18,7 @@ public class Notebook {
     }
 
     public Notebook(){
-        this(50);
+        this(DEFAULT_CAPACITY);
     }
 
     public void addNote(String text, String userName){
