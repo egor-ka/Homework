@@ -1,9 +1,11 @@
-package tasks.task2.supplies;
+package tasks.task2.supplies.realization;
+
+import tasks.task2.supplies.model.WritingStationery;
 
 /**
  * Created by Egor on 17.08.2016.
  */
-public class Pen extends WritingStationery{
+public class Pen extends WritingStationery {
     private String color;
 
     public Pen(String color, int lineWidth, String producer, int price){

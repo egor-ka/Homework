@@ -1,11 +1,13 @@
 package tasks.task2.supplies;
 
+import tasks.task2.supplies.model.Stationery;
+
 import java.util.ArrayList;
 
 import static tasks.task2.supplies.StandardStationerySet.getStandardStationerySet;
-import static tasks.task2.supplies.Stationery.NAME_AND_PRICE_ORDER;
-import static tasks.task2.supplies.Stationery.NAME_ORDER;
-import static tasks.task2.supplies.Stationery.PRICE_ORDER;
+import static tasks.task2.supplies.model.Stationery.NAME_AND_PRICE_ORDER;
+import static tasks.task2.supplies.model.Stationery.NAME_ORDER;
+import static tasks.task2.supplies.model.Stationery.PRICE_ORDER;
 
 /**
  * Created by Egor on 18.08.2016.

@@ -1,4 +1,4 @@
-package tasks.task2.supplies;
+package tasks.task2.supplies.model;
 
 import java.util.Comparator;
 
@@ -10,21 +10,21 @@ public class Stationery{
     protected String producer;
     protected int price;
 
-    static final Comparator<Stationery> NAME_ORDER =
+    public static final Comparator<Stationery> NAME_ORDER =
             new Comparator<Stationery>() {
                 public int compare(Stationery set1, Stationery set2) {
                     return set1.name.compareTo(set2.name);
                 }
             };
 
-    static final Comparator<Stationery> PRICE_ORDER =
+    public static final Comparator<Stationery> PRICE_ORDER =
             new Comparator<Stationery>() {
                 public int compare(Stationery set1, Stationery set2) {
                     return set1.price - set2.price;
                 }
             };
 
-    static final Comparator<Stationery> NAME_AND_PRICE_ORDER =
+    public static final Comparator<Stationery> NAME_AND_PRICE_ORDER =
             new Comparator<Stationery>() {
                 public int compare(Stationery set1, Stationery set2) {
                     if (set1.name.compareTo(set2.name) != 0){

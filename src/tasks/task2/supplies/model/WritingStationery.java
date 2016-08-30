@@ -1,9 +1,9 @@
-package tasks.task2.supplies;
+package tasks.task2.supplies.model;
 
 /**
  * Created by Egor on 17.08.2016.
  */
-public class WritingStationery extends Stationery{
+public class WritingStationery extends Stationery {
     protected int lineWidth;
 
     public WritingStationery(int lineWidth, String producer, int price){
