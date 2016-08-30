@@ -16,20 +16,10 @@ public class Pen extends WritingStationery {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        } else {
-            return color.equals(((Pen)obj).color) &&
-                    lineWidth == ((Pen)obj).lineWidth &&
-                    producer.equals(((Pen)obj).producer) &&
-                    price == ((Pen)obj).price;
-        }
+        return color.equals(((Pen)obj).color) &&
+                lineWidth == ((Pen)obj).lineWidth &&
+                producer.equals(((Pen)obj).producer) &&
+                price == ((Pen)obj).price;
     }
 
     @Override
