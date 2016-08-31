@@ -23,7 +23,7 @@ public class University {
         }
     }
 
-    public void addMarkByDiscipline(Discipline discipline, String student, double mark){
+    public void addMarkByDiscipline(Discipline discipline, String student, Number mark){
         if (!groups.get(discipline).hasStudent(student)){
             addStudent(discipline, student);
         }
@@ -53,14 +53,14 @@ public class University {
             double averageMark = 0;
 
             if (groups.get(discipline).hasStudent(student)) {
-                ArrayList<Integer> currentDisciplineMarks = groups.get(discipline).getMarks(student);
+                ArrayList<Number> currentDisciplineMarks = groups.get(discipline).getMarks(student);
                 System.out.print(discipline + ":");
 
                 if (currentDisciplineMarks.size() == 0) {
                     System.out.println(" NONE");
                 } else {
                     for (Number mark : currentDisciplineMarks) {
-                        averageMark += (double)mark;
+                        averageMark += mark.doubleValue();
                         System.out.print(" " + mark);
                     }
                     averageMark = averageMark / currentDisciplineMarks.size();
