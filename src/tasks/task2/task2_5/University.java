@@ -1,42 +1,94 @@
 package tasks.task2.task2_5;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Egor on 31.08.2016.
  */
 public class University {
-    private HashMap<String, Student> students;
+    private HashMap<Discipline, Group> groups;
 
     public University() {
-        this.students = new HashMap<>();
+        groups = new HashMap<>();
+        groups.put(Discipline.MATHEMATICS, new Group<Double>());
+        groups.put(Discipline.ECONOMICS, new Group<Double>());
+        groups.put(Discipline.JAVA_PROGRAMMING, new Group<Integer>());
+        groups.put(Discipline.PHYSICAL_EDUCATION, new Group<Integer>());
     }
 
-    public void addStudent(String name){
-        if (!students.containsKey(name)) {
-            students.put(name, new Student());
+    public void addStudent(Discipline discipline, String student){
+        if (!groups.get(discipline).hasStudent(student)) {
+            groups.get(discipline).addStudent(student);
         }
     }
 
-    public void addMarkToStudent(String name, Discipline discipline, int mark){
-        if (!students.containsKey(name)) {
-            System.out.println("No such student!");
-            return;
+    public void addMarkByDiscipline(Discipline discipline, String student, double mark){
+        if (!groups.get(discipline).hasStudent(student)){
+            addStudent(discipline, student);
         }
-        students.get(name).addMarkToDiscipline(discipline, mark);
+        groups.get(discipline).addMark(student, mark);
     }
 
-    public Discipline getStudentMarks(String name){
-        if (!students.containsKey(name)) {
-            System.out.println("No such student!");
-            return null;
+    public void printGroupsForStudent(String student) {
+        Discipline[] disciplines = Discipline.values();
+
+        System.out.println("Student " + student + " is in following groups:");
+        for (Discipline discipline: disciplines) {
+            if (groups.get(discipline).hasStudent(student)) {
+                System.out.print(discipline + ", ");
+            }
         }
-        System.out.println("Student " + name + " has following marks:");
-        return students.get(name).compareAndPrintMarks();
+        System.out.println("\n");
     }
 
-    public boolean gotStudent(String name){
-        return students.containsKey(name);
+    public Discipline getStudentMarks(String student){
+        Discipline topDiscipline = null;
+        double topAverageMark = 0;
+
+        System.out.println("Student " + student + " has following marks:");
+
+        Discipline[] disciplines = Discipline.values();
+        for (Discipline discipline: disciplines) {
+            double averageMark = 0;
+
+            if (groups.get(discipline).hasStudent(student)) {
+                ArrayList<Integer> currentDisciplineMarks = groups.get(discipline).getMarks(student);
+                System.out.print(discipline + ":");
+
+                if (currentDisciplineMarks.size() == 0) {
+                    System.out.println(" NONE");
+                } else {
+                    for (Number mark : currentDisciplineMarks) {
+                        averageMark += (double)mark;
+                        System.out.print(" " + mark);
+                    }
+                    averageMark = averageMark / currentDisciplineMarks.size();
+                    if (averageMark > topAverageMark) {
+                        topAverageMark = averageMark;
+                        topDiscipline = discipline;
+                    }
+                    System.out.println("\nAverage mark = " + averageMark);
+                }
+            }
+        }
+
+        if(topDiscipline != null) {
+            System.out.println("Best discipline is " + topDiscipline + "\n");
+        } else {
+            System.out.println("Student does not have any marks");
+        }
+        return topDiscipline;
     }
 
+    public boolean hasStudentInUniversity(String student){
+        Discipline[] disciplines = Discipline.values();
+
+        for (Discipline discipline: disciplines) {
+            if (groups.get(discipline).hasStudent(student)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
