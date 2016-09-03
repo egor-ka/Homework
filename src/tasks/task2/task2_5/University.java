@@ -1,60 +1,65 @@
 package tasks.task2.task2_5;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 
 /**
  * Created by Egor on 31.08.2016.
  */
 public class University {
-    private HashMap<Discipline, Group> groups;
+    private EnumMap<DisciplineName, Group> groups;
 
     public University() {
-        groups = new HashMap<>();
-        groups.put(Discipline.MATHEMATICS, new Group<Double>());
-        groups.put(Discipline.ECONOMICS, new Group<Double>());
-        groups.put(Discipline.JAVA_PROGRAMMING, new Group<Integer>());
-        groups.put(Discipline.PHYSICAL_EDUCATION, new Group<Integer>());
-    }
+        ArrayList<Discipline> disciplines = new ArrayList<>();
+        disciplines.add(new Discipline<Double>(DisciplineName.ECONOMICS));
+        disciplines.add(new Discipline<Integer>(DisciplineName.JAVA_PROGRAMMING));
+        disciplines.add(new Discipline<Double>(DisciplineName.MATHEMATICS));
+        disciplines.add(new Discipline<Integer>(DisciplineName.PHYSICAL_EDUCATION));
 
-    public void addStudent(Discipline discipline, String student){
-        if (!groups.get(discipline).hasStudent(student)) {
-            groups.get(discipline).addStudent(student);
+        groups = new EnumMap<>(DisciplineName.class);
+        for (Discipline discipline: disciplines) {
+            groups.put(discipline.getDisciplineName(), discipline.createGroup());
         }
     }
 
-    public void addMarkByDiscipline(Discipline discipline, String student, Number mark){
-        if (!groups.get(discipline).hasStudent(student)){
-            addStudent(discipline, student);
+    public void addStudent(DisciplineName disciplineName, String student){
+        if (!groups.get(disciplineName).hasStudent(student)) {
+            groups.get(disciplineName).addStudent(student);
         }
-        groups.get(discipline).addMark(student, mark);
+    }
+
+    public void addMarkByDiscipline(DisciplineName disciplineName, String student, Number mark){
+        if (!groups.get(disciplineName).hasStudent(student)){
+            addStudent(disciplineName, student);
+        }
+        groups.get(disciplineName).addMark(student, mark);
     }
 
     public void printGroupsForStudent(String student) {
-        Discipline[] disciplines = Discipline.values();
+        DisciplineName[] disciplineNames = DisciplineName.values();
 
         System.out.println("Student " + student + " is in following groups:");
-        for (Discipline discipline: disciplines) {
-            if (groups.get(discipline).hasStudent(student)) {
-                System.out.print(discipline + ", ");
+        for (DisciplineName disciplineName : disciplineNames) {
+            if (groups.get(disciplineName).hasStudent(student)) {
+                System.out.print(disciplineName + ", ");
             }
         }
         System.out.println("\n");
     }
 
-    public Discipline getStudentMarks(String student){
-        Discipline topDiscipline = null;
+    public DisciplineName getStudentMarks(String student){
+        DisciplineName topDisciplineName = null;
         double topAverageMark = 0;
 
         System.out.println("Student " + student + " has following marks:");
 
-        Discipline[] disciplines = Discipline.values();
-        for (Discipline discipline: disciplines) {
+        DisciplineName[] disciplineNames = DisciplineName.values();
+        for (DisciplineName disciplineName : disciplineNames) {
             double averageMark = 0;
 
-            if (groups.get(discipline).hasStudent(student)) {
-                ArrayList<Number> currentDisciplineMarks = groups.get(discipline).getMarks(student);
-                System.out.print(discipline + ":");
+            if (groups.get(disciplineName).hasStudent(student)) {
+                ArrayList<Number> currentDisciplineMarks = groups.get(disciplineName).getMarks(student);
+                System.out.print(disciplineName + ":");
 
                 if (currentDisciplineMarks.size() == 0) {
                     System.out.println(" NONE");
@@ -66,26 +71,26 @@ public class University {
                     averageMark = averageMark / currentDisciplineMarks.size();
                     if (averageMark > topAverageMark) {
                         topAverageMark = averageMark;
-                        topDiscipline = discipline;
+                        topDisciplineName = disciplineName;
                     }
                     System.out.println("\nAverage mark = " + averageMark);
                 }
             }
         }
 
-        if(topDiscipline != null) {
-            System.out.println("Best discipline is " + topDiscipline + "\n");
+        if(topDisciplineName != null) {
+            System.out.println("Best discipline is " + topDisciplineName + "\n");
         } else {
             System.out.println("Student does not have any marks");
         }
-        return topDiscipline;
+        return topDisciplineName;
     }
 
     public boolean hasStudentInUniversity(String student){
-        Discipline[] disciplines = Discipline.values();
+        DisciplineName[] disciplineNames = DisciplineName.values();
 
-        for (Discipline discipline: disciplines) {
-            if (groups.get(discipline).hasStudent(student)){
+        for (DisciplineName disciplineName : disciplineNames) {
+            if (groups.get(disciplineName).hasStudent(student)){
                 return true;
             }
         }
