@@ -8,9 +8,9 @@ import java.util.EnumMap;
  */
 public class University {
     private EnumMap<DisciplineName, Group> groups;
+    ArrayList<Discipline> disciplines = new ArrayList<>();
 
     public University() {
-        ArrayList<Discipline> disciplines = new ArrayList<>();
         disciplines.add(new Discipline<Double>(DisciplineName.ECONOMICS));
         disciplines.add(new Discipline<Integer>(DisciplineName.JAVA_PROGRAMMING));
         disciplines.add(new Discipline<Double>(DisciplineName.MATHEMATICS));
