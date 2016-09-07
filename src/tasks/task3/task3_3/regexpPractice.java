@@ -12,8 +12,28 @@ import static java.nio.file.Files.readAllLines;
  */
 public class regexpPractice {
 
+    public static ArrayList<String> getLinesAboutImagesFromFile(String text){
+        text = deleteTags(text);
+        return parseTextIntoSentences(text);
+    }
+
+    public static String getFile() {
+        StringBuilder text = new StringBuilder();
+        try ( BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream("C:/Users/Egor/IdeaProjects/Homework/src/tasks/task3/task3_3/attachment.html"), "windows-1251"))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                text.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text.toString();
+    }
+
     public static String deleteTags(final String text) {
-        String[] splitText = text.split("(<[^<>]+>)|(&nbsp)");
+        String[] splitText = text.split("(<[^<>]+>)|(&nbsp;)");
         String newText = "";
 
         for (int i = 0; i < splitText.length; i++) {
@@ -24,34 +44,16 @@ public class regexpPractice {
 
     public static ArrayList<String> parseTextIntoSentences(String text){
         ArrayList<String> sentenceList = new ArrayList<>();
-        Pattern patternTextString = Pattern.compile("[А-Я]([^.!?])+(([Рр]ис((\\.)|(ун)))(([Рр]ис\\.)|[^.!?])+)+[.!?]");
+        Pattern patternTextString = Pattern.compile("[А-Я]([^.!?])+([Рр]ис((\\.)|(ун)))(([Рр]ис\\.)|[^.!?])+[.!?]");
         Matcher matcherTextString = patternTextString.matcher(text);
 
         int index = 0;
         while (matcherTextString.find(index)) {
-            sentenceList.add(matcherTextString.group());
+            if(matcherTextString.group(2) != null)
+                sentenceList.add(matcherTextString.group());
             index = matcherTextString.end();
         }
         return sentenceList;
-    }
-
-    public static String getFile() throws IOException {
-        BufferedReader fin = new BufferedReader(new InputStreamReader(new FileInputStream("C:/Users/Egor/IdeaProjects/Homework/src/tasks/task3/task3_3/attachment.html"), "windows-1251"));
-        String text = "";
-        String line;
-
-        while ((line = fin.readLine()) != null){
-            text += line;
-        }
-
-        fin.close();
-        return text;
-    }
-
-    public static ArrayList<String> getLinesAboutImages(String text) throws IOException {
-
-        text = deleteTags(text);
-        return parseTextIntoSentences(text);
     }
 
     public static ArrayList<Integer> getImageNumbers(String text) {
@@ -70,7 +72,7 @@ public class regexpPractice {
         return numbers;
     }
 
-    public static boolean isNumberListIncrement(ArrayList<Integer> numbers) {
+    public static boolean isNumbersConsistent(ArrayList<Integer> numbers) {
         int currentNumber = numbers.get(0);
         for (Integer number: numbers) {
             if (currentNumber > number) {
@@ -92,18 +94,5 @@ public class regexpPractice {
             System.out.print(i + " ");
         }
         System.out.println();
-    }
-
-    public static void main(String[] args) throws IOException {
-        String text = getFile();
-
-        ArrayList<String> lines = getLinesAboutImages(text);
-        printLines(lines);
-        System.out.println("\nLine number: " + lines.size());
-
-        ArrayList<Integer> numbers = getImageNumbers(text);
-        printNumbers(numbers);
-        System.out.println(isNumberListIncrement(numbers)? "REFERENCES ARE INCREMENTAL": "REFERENCES ARE NOT INCREMENTAL");
-        System.out.println("\nNumber of numbers: " + numbers.size());
     }
 }
