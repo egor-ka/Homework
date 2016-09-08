@@ -1,6 +1,6 @@
 package tasks.task3.task3_2;
 
-import java.util.Enumeration;
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -10,44 +10,52 @@ import java.util.ResourceBundle;
 public class LocalePractice {
 
     private Locale currentLocale;
-    private ResourceBundle questionsBundle;
-    private ResourceBundle answersBundle;
+    private ResourceBundle questionsAndAnswersBundle;
 
-    Locale localeRu = new Locale("ru");
-    Locale localeEn = new Locale("en");
+    public static final String DEFAULT_BUNDLE_PATH = "resources.task3_2.questions_and_answers";
+    public static final Locale LOCALE_RU = new Locale("ru");
+    public static final Locale LOCALE_EN = new Locale("en");
 
     public LocalePractice() {
-        currentLocale = localeRu;
-        questionsBundle = ResourceBundle.getBundle("resourses.question", currentLocale);
+        currentLocale = LOCALE_RU;
+        questionsAndAnswersBundle = ResourceBundle.getBundle(DEFAULT_BUNDLE_PATH, currentLocale);
     }
 
-    public void showQuestions() {
-        String question;
-        Enumeration<String> keys = questionsBundle.getKeys();
+    public void showQuestions() throws UnsupportedEncodingException {
+        String questionName;
+        int questionNumber = 1;
 
-        for (int questionNumber = 1; keys.hasMoreElements(); questionNumber++) {
-            String value = questionsBundle.getString(keys.nextElement());
-            System.out.println(questionNumber + ") " + value);
+        while (questionsAndAnswersBundle.containsKey(questionName = "question.key" + questionNumber)) {
+            String value = questionsAndAnswersBundle.getString(questionName);
+            String valueUTF8 = new String(value.getBytes("ISO-8859-1"),  "windows-1251");
+            System.out.println(questionNumber + ") " + valueUTF8);
+            questionNumber++;
         }
     }
 
-    public void getAnswer(int questionNumber) {
-        if (answersBundle.containsKey("answers.key" + questionNumber)) {
-            System.out.println("Answer for question number " + questionNumber + " is: '" + answersBundle.getString("answers.key" + questionNumber));
+    public String getAnswer(int questionNumber) throws UnsupportedEncodingException {
+        String answerName = "answer.key" + questionNumber;
+
+        if (questionsAndAnswersBundle.containsKey(answerName)) {
+            String value = questionsAndAnswersBundle.getString(answerName);
+            String valueWin1251 = new String(value.getBytes("ISO-8859-1"),  "windows-1251");
+            System.out.println("Answer for question number " + questionNumber + " is: " + valueWin1251);
+            return valueWin1251;
         }
+        System.out.println("There is no question with such number! (" + questionNumber + ")");
+        return null;
     }
 
     public void reload(Locale locale) {
         this.currentLocale = locale;
-        questionsBundle = ResourceBundle.getBundle("resourses.question", currentLocale);
-        answersBundle = ResourceBundle.getBundle("resourses.answer", currentLocale);
+        questionsAndAnswersBundle = ResourceBundle.getBundle(DEFAULT_BUNDLE_PATH, currentLocale);
     }
 
     public void setCurrentLocaleEn() {
-        reload(localeEn);
+        reload(LOCALE_EN);
     }
 
     public void setCurrentLocaleRu() {
-        reload(localeRu);
+        reload(LOCALE_RU);
     }
 }
