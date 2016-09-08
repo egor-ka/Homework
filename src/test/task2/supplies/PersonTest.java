@@ -3,6 +3,9 @@ package test.task2.supplies;
 import org.junit.Before;
 import org.junit.Test;
 import tasks.task2.supplies.*;
+import tasks.task2.supplies.model.ReadingStationery;
+import tasks.task2.supplies.model.Stationery;
+import tasks.task2.supplies.realization.Book;
 
 import static org.junit.Assert.assertEquals;
 
