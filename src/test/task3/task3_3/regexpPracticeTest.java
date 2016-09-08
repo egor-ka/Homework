@@ -2,19 +2,17 @@ package test.task3.task3_3;
 
 import org.junit.Before;
 import org.junit.Test;
-import tasks.task3.task3_3.regexpPractice;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static tasks.task3.task3_3.regexpPractice.*;
+import static tasks.task3.task3_3.RegexpPractice.*;
 
 
 /**
  * Created by Egor on 07.09.2016.
  */
-public class regexpPracticeTest {
+public class RegexpPracticeTest {
     String text;
 
     @Before

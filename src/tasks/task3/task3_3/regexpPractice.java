@@ -10,7 +10,7 @@ import static java.nio.file.Files.readAllLines;
 /**
  * Created by Egor on 02.09.2016.
  */
-public class regexpPractice {
+public class RegexpPractice {
 
     public static ArrayList<String> getLinesAboutImagesFromFile(String text){
         text = deleteTags(text);
