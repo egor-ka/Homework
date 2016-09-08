@@ -43,7 +43,7 @@ public class CrazyLoggerTest {
         System.out.println("result of search 'message':");
         printList(found);
         System.out.println();
-}
+    }
 
     public void printList(ArrayList<String> list) {
         if (list != null) {
