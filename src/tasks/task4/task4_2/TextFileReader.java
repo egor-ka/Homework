@@ -11,7 +11,7 @@ import java.util.HashSet;
 public class TextFileReader {
 
     private static final String INPUT_FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/tasks/task4/task4_2/TextFileReader.java";
-    private static final String OUTPUT_FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/tasks/task4/task4_2/result.txt";
+    private static final String OUTPUT_FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/resources/task4/task4_2/result.txt";
     private HashSet<String> keyWordSet = new HashSet<>();
 
     public TextFileReader() {
