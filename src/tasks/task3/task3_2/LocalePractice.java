@@ -12,7 +12,7 @@ public class LocalePractice {
     private Locale currentLocale;
     private ResourceBundle questionsAndAnswersBundle;
 
-    public static final String DEFAULT_BUNDLE_PATH = "resources.task3_2.questions_and_answers";
+    public static final String DEFAULT_BUNDLE_PATH = "resources.task3.task3_2.questions_and_answers";
     public static final Locale LOCALE_RU = new Locale("ru");
     public static final Locale LOCALE_EN = new Locale("en");
 
