@@ -8,6 +8,8 @@ import tasks.task4.task4_4.MovieList;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by Egor on 10.09.2016.
  */
@@ -23,9 +25,20 @@ public class MovieListTest {
     }
 
     @Test
-    public void saveTest() throws IOException, ClassNotFoundException {
-     //   movieList = new MovieList();
-        movieList.restore();
+    public void saveAndRestoreTest() throws IOException, ClassNotFoundException {
         movieList.save();
+        movieList.restore();
+
+        assertEquals("Restore failed(1)", "Taxi", movieList.getMovies().get(0).getTitle());
+        assertEquals("Restore failed(2)", "Wasabi", movieList.getMovies().get(1).getTitle());
+
+        movieList.add(new Movie("Movie Name", 2016, new Actor("FirstName", "LastName")));
+        movieList.remove(1);
+
+        movieList.save();
+        movieList.restore();
+
+        assertEquals("Restore failed(1)", "Taxi", movieList.getMovies().get(0).getTitle());
+        assertEquals("Restore failed(2)", "Movie Name", movieList.getMovies().get(1).getTitle());
     }
 }

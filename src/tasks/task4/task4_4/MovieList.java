@@ -8,28 +8,23 @@ import java.util.ArrayList;
  */
 public class MovieList {
 
-    private static final String FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/tasks/task4/task4_4/movie_list.txt";
-
-    private ArrayList<Movie> movies = new ArrayList<>();
+    private static final String FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/resources/task4/task4_4/movie_list.ser";
+    private ArrayList<Movie> movies;
 
     public MovieList() throws IOException, ClassNotFoundException {
-     //   restore();
+        movies = new ArrayList<>();
     }
 
     public void save() throws IOException {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
-            for (Movie movie: movies) {
-                objectOutputStream.writeObject(movie);
-            }
+            objectOutputStream.writeObject(movies);
+            objectOutputStream.flush();
         }
     }
 
     public void restore() throws IOException, ClassNotFoundException {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            while (objectInputStream.available() > 0) {
-                movies.add((Movie) objectInputStream.readObject());
-                System.out.println(movies.size());
-            }
+            movies = ((ArrayList<Movie>) objectInputStream.readObject());
         }
     }
 
@@ -43,5 +38,9 @@ public class MovieList {
 
     public void remove(int index) {
         movies.remove(index);
+    }
+
+    public ArrayList<Movie> getMovies() {
+        return movies;
     }
 }
