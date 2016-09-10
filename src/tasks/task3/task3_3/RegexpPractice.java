@@ -21,7 +21,7 @@ public class RegexpPractice {
         StringBuilder text = new StringBuilder();
         try ( BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream("C:/Users/Egor/IdeaProjects/Homework/src/tasks/task3/task3_3/attachment.html"), "windows-1251"))) {
+                        new FileInputStream("C:/Users/Egor/IdeaProjects/Homework/src/resources/task3/task3_3/attachment.html"), "windows-1251"))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 text.append(line);
