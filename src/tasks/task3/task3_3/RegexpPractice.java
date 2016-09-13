@@ -12,6 +12,8 @@ import static java.nio.file.Files.readAllLines;
  */
 public class RegexpPractice {
 
+    private static final String FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/resources/task3/task3_3/attachment.html";
+
     public static ArrayList<String> getLinesAboutImagesFromFile(String text){
         text = deleteTags(text);
         return parseTextIntoSentences(text);
@@ -21,7 +23,7 @@ public class RegexpPractice {
         StringBuilder text = new StringBuilder();
         try ( BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream("C:/Users/Egor/IdeaProjects/Homework/src/resources/task3/task3_3/attachment.html"), "windows-1251"))) {
+                        new FileInputStream(FILE_NAME), "windows-1251"))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 text.append(line);
