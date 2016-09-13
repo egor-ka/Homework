@@ -1,7 +1,9 @@
 package tasks.task3.task3_1;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,15 +15,8 @@ public class CrazyLogger {
     private StringBuilder stringBuilder = new StringBuilder();
 
     public void addMessage(String message) {
-        String logString;
-        Calendar dateTime = Calendar.getInstance();
-        logString = dateTime.get(Calendar.DAY_OF_MONTH) + "-" +
-                dateTime.get(Calendar.MONTH) + "-" +
-                dateTime.get(Calendar.YEAR) + " : " +
-                dateTime.get(Calendar.HOUR) + "-" +
-                dateTime.get(Calendar.MINUTE) + " - " +
-                message + ";";
-        stringBuilder.append(logString);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-YYYY : hh-mm - ");
+        stringBuilder.append(dateFormat.format(new Date())).append(message).append(";");
     }
 
     public ArrayList<String> findMessageByText(String message) {
