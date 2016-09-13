@@ -31,7 +31,11 @@ public class ByteFileReader {
         return true;
     }
 
-    public void initKeyWordSet() {
+    public HashSet<String> getKeyWordSet() {
+        return keyWordSet;
+    }
+
+    private void initKeyWordSet() {
         String text = byteReadFile();
         String[] wordsFromFile = text.split("[(){}:;<>=\\s\\[\\]]");
 
@@ -42,7 +46,7 @@ public class ByteFileReader {
         }
     }
 
-    public String byteReadFile() {
+    private String byteReadFile() {
         String text = "";
 
         try (FileInputStream inFile = new FileInputStream(INPUT_FILE_NAME)) {
@@ -57,7 +61,4 @@ public class ByteFileReader {
         return text;
     }
 
-    public HashSet<String> getKeyWordSet() {
-        return keyWordSet;
-    }
 }
