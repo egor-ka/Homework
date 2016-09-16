@@ -57,4 +57,11 @@ public class FileExplorerTest {
         assertFalse("We shouldn't be able to delete file(it does not exist)", fileExplorer.deleteFileInCurrDir("file_to_delete.txt"));
         fileExplorer.printCurrentFileList();
     }
+
+    @Test
+    public void exceptionTriggerTest() {
+        System.out.println("exceptionTriggerTest:");
+        fileExplorer.openDirectoryOrFile("Users\\Egor\\IdeaProjects\\Homework\\src\\resources\\task5\\NON_EXISTING_DIRECTORY");
+        fileExplorer.writeToCurrentFile("text");
+    }
 }

@@ -17,19 +17,6 @@ public class FileExplorer {
         currentFile = new File(ROOT);
     }
 
-    //File methods throw SecurityException
-    // File(path) throws NullPointerException
-    public FileExplorer(String path) {
-        if (path != null) {
-            currentFile = new File(path);
-            if (!currentFile.exists()) {
-                currentFile = null;
-            }
-        }
-        currentFile = null;
-    }
-
-    //File methods throw SecurityException
     public void printCurrentFileList() {
         if (currentFile.isDirectory()) {
             String[] list = currentFile.list();
@@ -41,16 +28,20 @@ public class FileExplorer {
         }
     }
 
-    //File methods throw SecurityException
     public boolean openDirectoryOrFile(String name) {
         File file = (currentFile.getPath().equals(ROOT))
                 ? new File(File.separatorChar + name)
                 : new File(currentFile.getPath() + File.separatorChar + name);
-        if (file.exists()) {
+        try {
+            if (!file.exists()) {
+                throw new FileNotFoundException("Path is not correct!");
+            }
             currentFile = file;
             return true;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.toString());
+            return false;
         }
-        return false;
     }
 
     public boolean exitToParentFile() {
@@ -65,27 +56,22 @@ public class FileExplorer {
         currentFile = new File(ROOT);
     }
 
-    //File methods throw - SecurityException
     public boolean writeToCurrentFile(String textToAppend) {
-        if (currentFile != null) {
-            if (currentFile.isFile() && currentFile.canWrite()) {
-                try (FileOutputStream fileOutputStream = new FileOutputStream(currentFile, true)) {
-                    fileOutputStream.write(textToAppend.getBytes());
-                    fileOutputStream.flush();
-                    return true;
-                } catch (FileNotFoundException e) {
-                    System.out.println("Could not found file to write - writeToCurrentFile method");
-                    return false;
-                } catch (IOException e) {
-                    System.out.println("Could not found write to file - writeToCurrentFile method");
-                    return false;
-                }
-            }
+        try (FileOutputStream fileOutputStream = new FileOutputStream(currentFile, true)) {
+            fileOutputStream.write(textToAppend.getBytes());
+            fileOutputStream.flush();
+            return true;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.toString());
+            System.out.println("Could not found file to write!");
+            return false;
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            System.out.println("Could not write to file!");
+            return false;
         }
-        return false;
     }
 
-    // File(path) throws NullPointerException
     public boolean deleteFileInCurrDir(String fileName) {
         if (fileName != null) {
             File file = new File(currentFile.getPath() + File.separatorChar + fileName);
@@ -94,7 +80,6 @@ public class FileExplorer {
         return false;
     }
 
-    // File(path) throws NullPointerException
     public boolean createFileInCurrDir(String fileName) {
         if (fileName != null) {
             File file = new File(currentFile.getPath() + File.separatorChar + fileName);
@@ -108,5 +93,4 @@ public class FileExplorer {
         }
         return false;
     }
-
 }

@@ -1,2 +1,4 @@
 unmodified text
 text added using method
+text added using method
+text added using method
