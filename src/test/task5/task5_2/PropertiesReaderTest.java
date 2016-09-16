@@ -17,7 +17,7 @@ public class PropertiesReaderTest {
     public static final String EXISTING_BUNDLE_PATH = "resources.task5.task5_2.existing_file";
 
 
-    PropertiesReader propertiesReader;
+    private PropertiesReader propertiesReader;
 
     @Before
     public void setUp() {
