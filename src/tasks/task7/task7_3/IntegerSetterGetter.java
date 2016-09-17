@@ -42,16 +42,22 @@ public class IntegerSetterGetter extends Thread{
     private void getIntegersFromResource() throws InterruptedException {
         Integer number;
 
-        synchronized (resource) {
-            System.out.println("Поток " + getName() + " хочет извлечь число.");
-            number = resource.getELement();
-            while (number == null) {
-                System.out.println("Поток " + getName() + " ждет пока очередь заполнится");
-                resource.wait();
-                System.out.println("Поток " + getName() + " возобновил работу.");
-                number = resource.getELement();
+        synchronized (resource){
+            if (UserResourceThread.threadQueue.size() != 0) {
+                UserResourceThread.threadQueue.poll();
+
+                System.out.println("Поток " + getName() + " хочет извлечь число.");
+                number = resource.getElement();
+                while (number == null) {
+                    System.out.println("Поток " + getName() + " ждет пока очередь заполнится");
+                    resource.wait();
+                    System.out.println("Поток " + getName() + " возобновил работу.");
+                    number = resource.getElement();
+                }
+                System.out.println("Поток " + getName() + " извлек число " + number);
+
+                UserResourceThread.threadQueue.add(getName());
             }
-            System.out.println("Поток " + getName() + " извлек число " + number);
         }
     }
 

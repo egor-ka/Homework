@@ -1,12 +1,27 @@
 package tasks.task7.task7_3;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 /**
  * Created by Egor on 17.09.2016.
  */
 public class UserResourceThread {
+
+    public static BlockingQueue<String> threadQueue = new ArrayBlockingQueue<>(4);
+
+    private static void initThreadQueue() {
+        threadQueue.offer("1");
+        threadQueue.offer("2");
+        threadQueue.offer("3");
+        threadQueue.offer("4");
+    }
+
     public static void main(String[] args) throws InterruptedException {
 
         SharedResource res = new SharedResource();
+
+        initThreadQueue();
 
         IntegerSetterGetter t1 = new IntegerSetterGetter("1", res);
         IntegerSetterGetter t2 = new IntegerSetterGetter("2", res);
