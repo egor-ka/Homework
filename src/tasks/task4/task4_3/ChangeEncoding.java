@@ -9,7 +9,7 @@ public class ChangeEncoding {
 
     private static final String INPUT_FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/resources/task4/task4_3/utf-8-file.txt";
     private static final String OUTPUT_FILE_NAME = "C:/Users/Egor/IdeaProjects/Homework/src/resources/task4/task4_3/utf-16-file.txt";
-    private static final int READ_FILE_BUFFER_SIZE = 10;
+    private static final int READ_FILE_BUFFER_SIZE = 100;
 
     public static boolean rewriteFileUTF8ToUTF16() {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(INPUT_FILE_NAME), "UTF-8"));
