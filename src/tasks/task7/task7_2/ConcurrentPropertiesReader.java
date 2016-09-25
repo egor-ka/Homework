@@ -19,7 +19,7 @@ public class ConcurrentPropertiesReader {
 
     public ResourceBundle readBundle(String propertiesFilePath) {
         if (resourceBundle == null) {
-            synchronized (ConcurrentPropertiesReader.class) {
+            synchronized (this) {
                 if (resourceBundle == null) {
                     try {
                         System.out.println("Reading success by thread: " + Thread.currentThread().getName());
