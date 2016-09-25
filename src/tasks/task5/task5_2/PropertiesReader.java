@@ -1,5 +1,8 @@
 package tasks.task5.task5_2;
 
+import tasks.task5.task5_2.exception.PropertiesReaderFileNotFoundException;
+import tasks.task5.task5_2.exception.PropertiesReaderKeyNotFoundException;
+
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -10,37 +13,31 @@ public class PropertiesReader {
 
     private ResourceBundle resourceBundle;
 
-    public PropertiesReader() {
-    }
-
-    public PropertiesReader(String propertiesFilePath) {
+    public PropertiesReader(String propertiesFilePath) throws PropertiesReaderFileNotFoundException {
         resourceBundle = readBundle(propertiesFilePath);
     }
 
-    public ResourceBundle readBundle(String propertiesFilePath) {
+    public ResourceBundle readBundle(String propertiesFilePath) throws PropertiesReaderFileNotFoundException {
         try {
             resourceBundle = ResourceBundle.getBundle(propertiesFilePath);
         } catch (NullPointerException e) {
-            System.out.println("File name is null");
-            return null;
+            throw new PropertiesReaderFileNotFoundException("File name is null");
         } catch (MissingResourceException e) {
-            System.out.println("No file found by this path: " + propertiesFilePath);
-            return null;
+            throw new PropertiesReaderFileNotFoundException("No file found by this path: " + propertiesFilePath);
         }
         return resourceBundle;
     }
 
-    public Object getValueFromBundle(String key) {
+    public Object getValueFromBundle(String key) throws PropertiesReaderKeyNotFoundException {
         if (resourceBundle != null) {
             try {
                 if (resourceBundle.containsKey(key)) {
                     return resourceBundle.getObject(key);
                 } else {
-                    System.out.println("No value found by key: " + key);
+                    throw new PropertiesReaderKeyNotFoundException("No value found by key: " + key);
                 }
             } catch (NullPointerException e) {
-                System.out.println("Key is null");
-                return null;
+                throw new PropertiesReaderKeyNotFoundException("Key is null");
             }
         }
         return null;

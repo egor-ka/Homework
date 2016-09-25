@@ -3,6 +3,7 @@ package test.task5.task5_1;
 import org.junit.Before;
 import org.junit.Test;
 import tasks.task5.task5_1.FileExplorer;
+import tasks.task5.task5_1.FileExplorerException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -30,13 +31,26 @@ public class FileExplorerTest {
         System.out.println("writeToCurrentFileTest:");
 
         fileExplorer.exitToRoot();
-        assertTrue("Couldn't find existing directory", fileExplorer.openDirectoryOrFile("Users\\Egor\\IdeaProjects\\Homework\\src\\resources\\task5\\task5_1"));
+
+        try {
+            fileExplorer.openDirectoryOrFile("Users\\Egor\\IdeaProjects\\Homework\\src\\resources\\task5\\task5_1");
+        } catch (FileExplorerException e) {
+            assertTrue("Couldn't find existing directory", false);
+        }
 
         //OPEN FILE
-        assertTrue("Couldn't open existing file", fileExplorer.openDirectoryOrFile("file.txt"));
+        try {
+            fileExplorer.openDirectoryOrFile("file.txt");
+        } catch (FileExplorerException e) {
+            assertTrue("Couldn't open existing file", false);
+        }
 
         //ADD TEXT
-        assertTrue("Couldn't add text to file", fileExplorer.writeToCurrentFile("\ntext added using method"));
+        try {
+            fileExplorer.writeToCurrentFile("\ntext added using method");
+        } catch (FileExplorerException e) {
+            assertTrue("Couldn't add text to file", false);
+        }
     }
 
     @Test
@@ -44,24 +58,29 @@ public class FileExplorerTest {
         System.out.println("createAndDeleteFileTest:");
 
         fileExplorer.exitToRoot();
-        assertTrue("Couldn't find existing directory", fileExplorer.openDirectoryOrFile("Users\\Egor\\IdeaProjects\\Homework\\src\\resources\\task5\\task5_1"));
+        try {
+            fileExplorer.openDirectoryOrFile("Users\\Egor\\IdeaProjects\\Homework\\src\\resources\\task5\\task5_1");
+        } catch (FileExplorerException e) {
+            assertTrue("Couldn't find existing directory", false);
+        }
         fileExplorer.printCurrentFileList();
 
         //CREATE
-        assertTrue("We should be able to create file", fileExplorer.createFileInCurrDir("file_to_delete.txt"));
-        assertFalse("We shouldn't be able to create file(it already exists)", fileExplorer.createFileInCurrDir("file_to_delete.txt"));
+        try {
+            fileExplorer.createFileInCurrDir("file_to_delete.txt");
+        } catch (FileExplorerException e) {
+            assertTrue("We should be able to create file", false);
+        }
+        try {
+            fileExplorer.createFileInCurrDir("file_to_delete.txt");
+            assertTrue("We shouldn't be able to create file(it already exists)", false);
+        } catch (FileExplorerException e) {
+        }
         fileExplorer.printCurrentFileList();
 
         //DELETE
         assertTrue("We should be able to delete file(it exists)", fileExplorer.deleteFileInCurrDir("file_to_delete.txt"));
         assertFalse("We shouldn't be able to delete file(it does not exist)", fileExplorer.deleteFileInCurrDir("file_to_delete.txt"));
         fileExplorer.printCurrentFileList();
-    }
-
-    @Test
-    public void exceptionTriggerTest() {
-        System.out.println("exceptionTriggerTest:");
-        fileExplorer.openDirectoryOrFile("Users\\Egor\\IdeaProjects\\Homework\\src\\resources\\task5\\NON_EXISTING_DIRECTORY");
-        fileExplorer.writeToCurrentFile("text");
     }
 }

@@ -28,20 +28,15 @@ public class FileExplorer {
         }
     }
 
-    public boolean openDirectoryOrFile(String name) {
+    public boolean openDirectoryOrFile(String name) throws FileExplorerException {
         File file = (currentFile.getPath().equals(ROOT))
                 ? new File(File.separatorChar + name)
                 : new File(currentFile.getPath() + File.separatorChar + name);
-        try {
-            if (!file.exists()) {
-                throw new FileNotFoundException("Path is not correct!");
-            }
-            currentFile = file;
-            return true;
-        } catch (FileNotFoundException e) {
-            System.out.println(e.toString());
-            return false;
+        if (!file.exists()) {
+            throw new FileExplorerException("Path is not correct!");
         }
+        currentFile = file;
+        return true;
     }
 
     public boolean exitToParentFile() {
@@ -56,19 +51,15 @@ public class FileExplorer {
         currentFile = new File(ROOT);
     }
 
-    public boolean writeToCurrentFile(String textToAppend) {
+    public boolean writeToCurrentFile(String textToAppend) throws FileExplorerException {
         try (FileOutputStream fileOutputStream = new FileOutputStream(currentFile, true)) {
             fileOutputStream.write(textToAppend.getBytes());
             fileOutputStream.flush();
             return true;
         } catch (FileNotFoundException e) {
-            System.out.println(e.toString());
-            System.out.println("Could not found file to write!");
-            return false;
+            throw new FileExplorerException("Could not found file to write!");
         } catch (IOException e) {
-            System.out.println(e.toString());
-            System.out.println("Could not write to file!");
-            return false;
+            throw new FileExplorerException("Could not write to file!");
         }
     }
 
@@ -80,15 +71,17 @@ public class FileExplorer {
         return false;
     }
 
-    public boolean createFileInCurrDir(String fileName) {
+    public boolean createFileInCurrDir(String fileName) throws FileExplorerException {
         if (fileName != null) {
             File file = new File(currentFile.getPath() + File.separatorChar + fileName);
 
             try {
-                return file.createNewFile();
+                if (file.createNewFile()) {
+                    return true;
+                }
+                throw new FileExplorerException("Couldn't create file " + file.getPath());
             } catch (IOException e) {
-                System.out.println("Couldn't create file " + file.getPath());
-                return false;
+                throw new FileExplorerException("Couldn't create file - IOException");
             }
         }
         return false;
