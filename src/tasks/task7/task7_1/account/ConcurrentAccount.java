@@ -21,14 +21,14 @@ public class ConcurrentAccount extends Account {
     }
 
     @Override
-    public synchronized void depositMoney(int moneyAmount) {
+    public void depositMoney(int moneyAmount) {
         lock.lock();
         money += moneyAmount;
         lock.unlock();
     }
 
     @Override
-    public synchronized boolean withdrawMoney(int moneyAmount) {
+    public boolean withdrawMoney(int moneyAmount) {
         lock.lock();
         if (money < moneyAmount) {
             lock.unlock();
